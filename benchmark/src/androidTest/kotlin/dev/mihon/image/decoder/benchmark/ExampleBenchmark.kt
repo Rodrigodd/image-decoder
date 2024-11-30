@@ -2,7 +2,7 @@ package dev.mihon.image.decoder.benchmark
 
 import android.content.Context
 import android.graphics.Rect
-import tachiyomi.decoder.ImageDecoder
+import dev.mihon.image.decoder.ImageDecoder
 import android.util.Log
 import androidx.benchmark.junit4.BenchmarkRule
 import androidx.benchmark.junit4.measureRepeated
