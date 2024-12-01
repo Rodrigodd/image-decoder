@@ -54,7 +54,6 @@ private:
   std::shared_ptr<Stream> stream;
 
   // The target color profile for the decoded image.
-  // TODO: currently unused, keeping until color management is implemented.
   cmsHPROFILE targetProfile;
 
   // The VImage object. Have a reference to `stream`, so it must be declared
