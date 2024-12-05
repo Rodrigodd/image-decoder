@@ -21,6 +21,12 @@ jint JNI_OnLoad(JavaVM* vm, void*) {
   } else {
     return JNI_ERR;
   }
+
+  if (VIPS_INIT("VipsDecoder")) {
+    LOGE("Failed to initialize libvips.");
+    return JNI_ERR;
+  }
+
   return JNI_VERSION_1_6;
 }
 

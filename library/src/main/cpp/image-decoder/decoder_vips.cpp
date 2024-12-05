@@ -26,12 +26,6 @@ VipsDecoder* try_vips_decoder(std::shared_ptr<Stream>& stream, bool cropBorders,
 VipsDecoder::VipsDecoder(std::shared_ptr<Stream>&& stream, bool cropBorders,
                          cmsHPROFILE targetProfile)
     : stream(std::move(stream)), targetProfile(targetProfile) {
-
-  if (VIPS_INIT("VipsDecoder")) {
-    LOGE("Failed to initialize libvips.");
-    throw std::runtime_error("libvips initialization failed");
-  }
-
   // the VImage does not take ownership of the `stream`.
   this->image = VImage::new_from_buffer(
       this->stream->bytes, this->stream->size, nullptr,
