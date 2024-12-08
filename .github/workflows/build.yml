@@ -58,6 +58,17 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
+      - name: CMake Cache
+        uses: actions/cache@v4
+        id: cmake-cache
+        with:
+          path: |
+            library/.cxx/*
+          key: cmake-cache
+
+      - name: Build Library
+        run: ./gradlew :library:assemble
+
       - name: Enable KVM group perms
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -92,7 +103,9 @@ jobs:
           api-level: 29
           ndk: 26.3.11579264
           cmake: 3.31.1
-          script: ./gradlew connectedCheck -P andoidtestInstrumentationRunnerArguments.androidx.benchmark.dryRunMode=true
+          script: |
+            ./gradlew :library:connectedAndroidTest
+            ./gradlew connectedCheck -P andoidtestInstrumentationRunnerArguments.androidx.benchmark.dryRunMode=true
 
 
       # Archive the generated AAR file
