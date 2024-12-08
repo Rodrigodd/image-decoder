@@ -105,7 +105,7 @@ jobs:
           cmake: 3.31.1
           script: |
             ./gradlew :library:connectedAndroidTest
-            ./gradlew connectedCheck -P andoidtestInstrumentationRunnerArguments.androidx.benchmark.dryRunMode=true
+            ./gradlew connectedCheck -P android.testInstrumentationRunnerArguments.androidx.benchmark.dryRunMode=true
 
 
       # Archive the generated AAR file
