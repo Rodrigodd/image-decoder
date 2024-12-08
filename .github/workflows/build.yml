@@ -52,6 +52,16 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
+      # AVD needs a lot of disk space, so we need to free up some space
+      # See: https://github.com/ReactiveCircus/android-emulator-runner/issues/390#issuecomment-2323948660
+      - name: Free disk space
+        run: |
+          sudo apt purge -yq $(dpkg -l | grep '^ii' | awk '{ print $2 }' | grep -P '(aspnetcore|cabal-|dotnet-|ghc-|libmono|mongodb-|mysql-|php)') \
+            firefox google-chrome-stable google-cloud-cli microsoft-edge-stable mono-devel mono-runtime-common monodoc-manual powershell ruby
+          sudo apt autoremove -yq
+          sudo apt clean
+          sudo rm -fr /opt/ghc /opt/hostedtoolcache /usr/lib/node_modules /usr/local/share/boost /usr/share/dotnet /usr/share/swift
+
       - name: AVD cache
         uses: actions/cache@v4
         id: avd-cache
